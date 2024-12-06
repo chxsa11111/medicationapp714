@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<form action = '' method = 'POST'>
+{% csrf_token %}
+
+</form>
+{% endblock %}
+
+{% block content %}
+
+<table class='table table-borderless'>
+  <thead>
+    <tr>
+      <th scope='row'>薬名</th>
+      <td>{{ object.title }}</td>
+    </tr>
+  </thead>
+  <tbody class='table-group-divider'>
+    <tr>
+      <th scope='row'>詳細</th>
+      <td>{{ object.contents | linebreaksbr }}</td>
+    </tr>
+    <tr>
+      <th scope='row'>投薬時間</th>
+      <td>{{ object.created_at }}</td>
+    </tr>
+
+  </tbody>
+</table>
+     
+
+{% comment %} <div class="alert alert-success" role="alert"> {% endcomment %}
+    {% if object.img %}
+      <img src='{{ object.img.url }}' class='img-fluid'/>
+    {% endif %}
+{% comment %} </div> {% endcomment %}
+<div><a href="{% url 'todo:list' %}" class="btn btn-outline-primary " tabindex="-1" role="button" aria-disabled="true">TOP</a></div>
+{% endblock content %}

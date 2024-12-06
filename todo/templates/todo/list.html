@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">投薬記録</h1>
+      <p class="lead">お薬を登録しましょう</p>
+      <p class="lead">現時刻は {% now "Y年m月d日 H:i " %}です</p>
+
+    </div>
+  </div>{% endblock %}
+
+{% block content %}
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <h1><a class="navbar-brand" href="{% url 'todo:list'  %}">投薬記録TOP</a></h1>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#NavbarSupportedContent" aria-controls="NavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="NavbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'todo:create'  %}">新規作成 <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'todo:vaccinationlist'  %}">予防接種記録</a>
+      </li>
+    </ul>
+
+     
+      <form class="form-inline my-2 my-lg-0" method="GET" action='{% url 'todo:list' %}'>
+        <input class="form-control mr-sm-2" type='text' placeholder="Search"  name='keyword'>
+        <button class="btn btn-outline-success my-2 my-sm-0" type='submit'>検索</button>
+      </form>
+
+
+  </div>
+</nav>
+
+    <div class="container">
+
+    {% for item in object_list %}
+    <div class="alert alert-{{ item.priority }}" role="alert">
+        <p>{{ item.title }} ◆投薬日{{ item.created_at | date:"y/n/j H:i"}} ◆次回投薬{{ item.duedate | date:"y/n/j H:i"}}</p>
+        <a href="{% url 'todo:update' item.pk %}" class="btn btn-outline-info " tabindex="-1" role="button" aria-disabled="true">編集画面</a>
+        <a href="{% url 'todo:delete' item.pk %}" class="btn btn-outline-success " tabindex="-1" role="button" aria-disabled="true">削除画面</a>
+        <a href="{% url 'todo:detail' item.pk %}" class="btn btn-outline-primary " tabindex="-1" role="button" aria-disabled="true">詳細画面</a>
+    </div> 
+ {% endfor %}
+</div>
+ {% endblock content %}
