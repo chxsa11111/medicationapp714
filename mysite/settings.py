@@ -23,9 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+i6jaemsf37km)cm1c^)-%&+7q9u*q1$d$l_ib67%&_g%5#c%t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '.pythonanywhere.com', 'mrapp11111.pythonanywhere.com']
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+from django.core.management.utils import get_random_secret_key
+SECRET_KEY = get_random_secret_key()  
+
 
 
 # Application definition
@@ -170,3 +177,10 @@ ACCOUNT_LOGOUT_ON_GET = True
 
 # メール送信の設定
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+
+try:
+    from .local_settings import *
+except:
+    pass
